@@ -1,4 +1,5 @@
 import 'package:exam_app_elevate/core/constants/app_colors.dart';
+import 'package:exam_app_elevate/core/constants/app_strings.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
@@ -58,6 +59,28 @@ class AppTheme {
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(color: AppColors.error),
+      ),
+    ),
+    fontFamily: AppStrings.fontName,
+    textTheme: const TextTheme(
+      titleLarge: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
+        color: AppColors.blackBase,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: AppColors.blackBase,
+      ),
+      bodySmall: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w400,
+        color: AppColors.black50,
+      ),
+      labelLarge: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
       ),
     ),
   );

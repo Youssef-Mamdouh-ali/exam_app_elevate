@@ -12,4 +12,5 @@ class AppStrings {
   static const String forgetPassword = 'Forget password?';
   static const String donotHaveAccount = "Don't have an account?";
   static const String signUp = 'Sign up';
+  static const String fontName = 'Roboto';
 }
