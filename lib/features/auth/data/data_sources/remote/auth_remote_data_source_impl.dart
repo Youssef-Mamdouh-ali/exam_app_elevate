@@ -7,7 +7,7 @@ import 'package:injectable/injectable.dart';
 
 import 'auth_remote_data_source.dart';
 
-@Injectable(as: AuthRemoteDataSource)
+@Injectable(as: AuthRemoteDataSource, env: ['prod'])
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final AuthApiClient _apiClient;
 
@@ -37,10 +37,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<BaseResponse<void>> resetPassword(
-      String email,
-      String newPassword,
-      ) async
-  {
+    String email,
+    String newPassword,
+  ) async {
     try {
       await _apiClient.resetPassword(
         ResetPasswordRequestModel(email: email, newPassword: newPassword),

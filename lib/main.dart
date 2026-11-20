@@ -5,7 +5,7 @@ import 'configure/di/di.dart';
 import 'core/theme/app_theme.dart';
 
 void main() {
-  configureDependencies();
+  configureDependencies(env: 'dev');
   runApp(const ExamApp());
 }
 
