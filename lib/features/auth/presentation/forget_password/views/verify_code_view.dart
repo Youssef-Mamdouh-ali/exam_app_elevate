@@ -103,6 +103,7 @@ class _VerifyCodeBody extends StatelessWidget {
               ),
               const SizedBox(height: 32),
               BlocBuilder<VerifyCodeCubit, VerifyCodeState>(
+                buildWhen: (prev, curr) => prev.verifyState != curr.verifyState,
                 builder: (context, state) {
                   return Pinput(
                     length: 6,
@@ -130,9 +131,27 @@ class _VerifyCodeBody extends StatelessWidget {
                     AppStrings.didNotReceiveCode,
                     style: textTheme.bodyMedium,
                   ),
-                  TextButton(
-                    onPressed: () => cubit.doEvent(ResendCodeEvent(email)),
-                    child: const Text(AppStrings.resend),
+                  BlocBuilder<VerifyCodeCubit, VerifyCodeState>(
+                    buildWhen: (prev, curr) =>
+                        prev.resendState.isLoading !=
+                        curr.resendState.isLoading,
+                    builder: (context, state) {
+                      final isResending = state.resendState.isLoading;
+                      return TextButton(
+                        onPressed: isResending
+                            ? null
+                            : () => cubit.doEvent(ResendCodeEvent(email)),
+                        child: isResending
+                            ? const SizedBox(
+                                height: 16,
+                                width: 16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : const Text(AppStrings.resend),
+                      );
+                    },
                   ),
                 ],
               ),
