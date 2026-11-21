@@ -4,8 +4,8 @@ import 'package:injectable/injectable.dart';
 
 import 'auth_remote_data_source.dart';
 
-@Injectable(as: AuthRemoteDataSource, env: [AppStrings.dev])
-class AuthFakeRemoteDataSource implements AuthRemoteDataSource {
+@Injectable(as: ForgotPasswordRemoteDataSource, env: [AppStrings.dev])
+class AuthFakeRemoteDataSource implements ForgotPasswordRemoteDataSource {
   static const String _validEmail = 'demo@gmail.com';
   static const String _validCode = '123456';
 

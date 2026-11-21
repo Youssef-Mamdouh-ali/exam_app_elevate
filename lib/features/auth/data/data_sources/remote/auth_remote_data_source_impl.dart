@@ -9,8 +9,8 @@ import 'package:injectable/injectable.dart';
 
 import 'auth_remote_data_source.dart';
 
-@Injectable(as: AuthRemoteDataSource, env: [AppStrings.prod])
-class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
+@Injectable(as: ForgotPasswordRemoteDataSource, env: [AppStrings.prod])
+class AuthRemoteDataSourceImpl implements ForgotPasswordRemoteDataSource {
   final AuthApiClient _apiClient;
 
   AuthRemoteDataSourceImpl(this._apiClient);

@@ -5,22 +5,22 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: AuthRepo)
 class AuthRepoImpl implements AuthRepo {
-  final AuthRemoteDataSource _remoteDataSource;
+  final ForgotPasswordRemoteDataSource _forgotPasswordRemoteDataSource;
 
-  AuthRepoImpl(this._remoteDataSource);
+  AuthRepoImpl(this._forgotPasswordRemoteDataSource);
 
   @override
   Future<BaseResponse<void>> forgotPassword(String email) {
-    return _remoteDataSource.forgotPassword(email);
+    return _forgotPasswordRemoteDataSource.forgotPassword(email);
   }
 
   @override
   Future<BaseResponse<void>> verifyResetCode(String code) {
-    return _remoteDataSource.verifyResetCode(code);
+    return _forgotPasswordRemoteDataSource.verifyResetCode(code);
   }
 
   @override
   Future<BaseResponse<void>> resetPassword(String email, String newPassword) {
-    return _remoteDataSource.resetPassword(email, newPassword);
+    return _forgotPasswordRemoteDataSource.resetPassword(email, newPassword);
   }
 }
