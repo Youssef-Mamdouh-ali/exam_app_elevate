@@ -1,7 +1,7 @@
 import 'package:exam_app_elevate/core/constants/app_strings.dart';
 
-class Validators {
-  Validators._();
+class AppValidators {
+  AppValidators._();
 
   static final RegExp _emailRegex = RegExp(
     r'^[\w\.\-+]+@([\w\-]+\.)+[\w\-]{2,}$',
