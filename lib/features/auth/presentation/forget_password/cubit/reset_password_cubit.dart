@@ -12,10 +12,6 @@ import 'reset_password_state.dart';
 class ResetPasswordCubit extends Cubit<ResetPasswordState> {
   final ResetPasswordUseCase _resetPasswordUseCase;
 
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
-
   ResetPasswordCubit(this._resetPasswordUseCase)
     : super(const ResetPasswordState());
 
@@ -50,10 +46,5 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
     }
   }
 
-  @override
-  Future<void> close() {
-    passwordController.dispose();
-    confirmPasswordController.dispose();
-    return super.close();
-  }
+
 }

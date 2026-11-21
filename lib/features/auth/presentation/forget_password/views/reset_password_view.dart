@@ -2,12 +2,12 @@ import 'package:exam_app_elevate/configure/di/di.dart';
 import 'package:exam_app_elevate/core/constants/app_strings.dart';
 import 'package:exam_app_elevate/core/router/app_routes.dart';
 import 'package:exam_app_elevate/core/utils/app_validators.dart';
+import 'package:exam_app_elevate/features/auth/presentation/forget_password/cubit/reset_password_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../cubit/reset_password_cubit.dart';
-import '../cubit/reset_password_event.dart';
 import '../cubit/reset_password_state.dart';
 
 class ResetPasswordView extends StatelessWidget {
@@ -24,15 +24,41 @@ class ResetPasswordView extends StatelessWidget {
   }
 }
 
-class _ResetPasswordBody extends StatelessWidget {
+class _ResetPasswordBody extends StatefulWidget {
   final String email;
 
   const _ResetPasswordBody({required this.email});
 
   @override
+  State<_ResetPasswordBody> createState() => _ResetPasswordBodyState();
+}
+
+class _ResetPasswordBodyState extends State<_ResetPasswordBody> {
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  void _onContinue() {
+    if (_formKey.currentState?.validate() ?? false) {
+      context.read<ResetPasswordCubit>().doEvent(
+        SubmitResetPasswordEvent(
+          email: widget.email,
+          newPassword: _passwordController.text,
+        ),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final cubit = context.read<ResetPasswordCubit>();
 
     return BlocListener<ResetPasswordCubit, ResetPasswordState>(
       listenWhen: (prev, curr) =>
@@ -64,7 +90,7 @@ class _ResetPasswordBody extends StatelessWidget {
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Form(
-            key: cubit.formKey,
+            key: _formKey,
             child: Column(
               children: [
                 const SizedBox(height: 20),
@@ -80,7 +106,7 @@ class _ResetPasswordBody extends StatelessWidget {
                 ),
                 const SizedBox(height: 32),
                 TextFormField(
-                  controller: cubit.passwordController,
+                  controller: _passwordController,
                   obscureText: true,
                   validator: AppValidators.password,
                   decoration: const InputDecoration(
@@ -90,10 +116,10 @@ class _ResetPasswordBody extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 TextFormField(
-                  controller: cubit.confirmPasswordController,
+                  controller: _confirmPasswordController,
                   obscureText: true,
                   validator: (value) => AppValidators.confirmPassword(
-                    cubit.passwordController.text,
+                    _passwordController.text,
                   )(value),
                   decoration: const InputDecoration(
                     labelText: AppStrings.confirmPassword,
@@ -107,7 +133,7 @@ class _ResetPasswordBody extends StatelessWidget {
                     return SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: isLoading ? null : () => _onContinue(cubit),
+                        onPressed: isLoading ? null : _onContinue,
                         child: isLoading
                             ? const SizedBox(
                                 height: 20,
@@ -127,16 +153,5 @@ class _ResetPasswordBody extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _onContinue(ResetPasswordCubit cubit) {
-    if (cubit.formKey.currentState?.validate() ?? false) {
-      cubit.doEvent(
-        SubmitResetPasswordEvent(
-          email: email,
-          newPassword: cubit.passwordController.text,
-        ),
-      );
-    }
   }
 }
