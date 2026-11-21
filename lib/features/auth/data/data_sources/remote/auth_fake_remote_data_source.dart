@@ -1,10 +1,10 @@
 import 'package:exam_app_elevate/configure/base_response/base_response.dart';
-import 'package:exam_app_elevate/core/constants/app_strings.dart';
+import 'package:exam_app_elevate/configure/di/app_environment.dart';
 import 'package:injectable/injectable.dart';
 
 import 'auth_remote_data_source.dart';
 
-@Injectable(as: ForgotPasswordRemoteDataSource, env: [AppStrings.dev])
+@Injectable(as: ForgotPasswordRemoteDataSource, env: [AppEnvironment.dev])
 class AuthFakeRemoteDataSource implements ForgotPasswordRemoteDataSource {
   static const String _validEmail = 'demo@gmail.com';
   static const String _validCode = '123456';

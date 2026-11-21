@@ -47,6 +47,5 @@ class AppStrings {
   static const String confirmPassword = 'Confirm password';
   static const String invalidPassword = 'Password is not valid';
   static const String passwordsDoNotMatch = 'Passwords do not match';
-  static const String dev = 'dev';
-  static const String prod = 'prod';
+
 }

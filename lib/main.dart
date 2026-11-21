@@ -1,12 +1,12 @@
-import 'package:exam_app_elevate/core/constants/app_strings.dart';
 import 'package:exam_app_elevate/core/router/app_router.dart';
 import 'package:flutter/material.dart';
 
+import 'configure/di/app_environment.dart';
 import 'configure/di/di.dart';
 import 'core/theme/app_theme.dart';
 
 void main() {
-  configureDependencies(env: AppStrings.dev);
+  configureDependencies(env: AppEnvironment.dev);
   runApp(const ExamApp());
 }
 
