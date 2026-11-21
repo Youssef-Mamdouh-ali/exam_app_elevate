@@ -1,7 +1,6 @@
 import 'package:exam_app_elevate/configure/base_response/base_response.dart';
 import 'package:exam_app_elevate/configure/base_state/base_state.dart';
 import 'package:exam_app_elevate/features/auth/domain/use_cases/forgot_password_use_case.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -11,9 +10,6 @@ import 'forget_password_state.dart';
 @injectable
 class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
   final ForgotPasswordUseCase _forgotPasswordUseCase;
-
-  final emailController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
 
   ForgetPasswordCubit(this._forgotPasswordUseCase)
     : super(const ForgetPasswordState());
@@ -49,11 +45,5 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
           ),
         );
     }
-  }
-
-  @override
-  Future<void> close() {
-    emailController.dispose();
-    return super.close();
   }
 }

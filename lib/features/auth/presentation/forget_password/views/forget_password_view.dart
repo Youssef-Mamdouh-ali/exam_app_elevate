@@ -21,13 +21,34 @@ class ForgetPasswordView extends StatelessWidget {
   }
 }
 
-class _ForgetPasswordBody extends StatelessWidget {
+class _ForgetPasswordBody extends StatefulWidget {
   const _ForgetPasswordBody();
+
+  @override
+  State<_ForgetPasswordBody> createState() => _ForgetPasswordBodyState();
+}
+
+class _ForgetPasswordBodyState extends State<_ForgetPasswordBody> {
+  final _emailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  void _onContinue() {
+    if (_formKey.currentState?.validate() ?? false) {
+      context.read<ForgetPasswordCubit>().doEvent(
+        SendEmailEvent(_emailController.text.trim()),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final cubit = context.read<ForgetPasswordCubit>();
 
     return BlocListener<ForgetPasswordCubit, ForgetPasswordState>(
       listenWhen: (prev, curr) =>
@@ -59,7 +80,7 @@ class _ForgetPasswordBody extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.all(16),
           child: Form(
-            key: cubit.formKey,
+            key: _formKey,
             child: Column(
               children: [
                 const SizedBox(height: 20),
@@ -75,7 +96,7 @@ class _ForgetPasswordBody extends StatelessWidget {
                 ),
                 const SizedBox(height: 32),
                 TextFormField(
-                  controller: cubit.emailController,
+                  controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   validator: AppValidators.email,
                   decoration: const InputDecoration(
@@ -90,7 +111,7 @@ class _ForgetPasswordBody extends StatelessWidget {
                     return SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: isLoading ? null : () => _onContinue(cubit),
+                        onPressed: isLoading ? null : _onContinue,
                         child: isLoading
                             ? const SizedBox(
                                 height: 20,
@@ -110,11 +131,5 @@ class _ForgetPasswordBody extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _onContinue(ForgetPasswordCubit cubit) {
-    if (cubit.formKey.currentState?.validate() ?? false) {
-      cubit.doEvent(SendEmailEvent(cubit.emailController.text.trim()));
-    }
   }
 }
