@@ -1,6 +1,6 @@
 import 'package:exam_app_elevate/configure/base_response/base_response.dart';
 
-abstract class AuthRemoteDataSource {
+abstract interface class AuthRemoteDataSource {
 
   Future<BaseResponse<void>> forgotPassword(String email);
 
