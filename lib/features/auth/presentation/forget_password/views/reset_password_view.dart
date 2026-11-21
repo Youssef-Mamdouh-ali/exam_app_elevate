@@ -1,7 +1,7 @@
 import 'package:exam_app_elevate/configure/di/di.dart';
 import 'package:exam_app_elevate/core/constants/app_strings.dart';
 import 'package:exam_app_elevate/core/router/app_routes.dart';
-import 'package:exam_app_elevate/core/utils/validators.dart';
+import 'package:exam_app_elevate/core/utils/app_validators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -82,7 +82,7 @@ class _ResetPasswordBody extends StatelessWidget {
                 TextFormField(
                   controller: cubit.passwordController,
                   obscureText: true,
-                  validator: Validators.password,
+                  validator: AppValidators.password,
                   decoration: const InputDecoration(
                     labelText: AppStrings.newPassword,
                     hintText: AppStrings.enterNewPassword,
@@ -92,7 +92,7 @@ class _ResetPasswordBody extends StatelessWidget {
                 TextFormField(
                   controller: cubit.confirmPasswordController,
                   obscureText: true,
-                  validator: (value) => Validators.confirmPassword(
+                  validator: (value) => AppValidators.confirmPassword(
                     cubit.passwordController.text,
                   )(value),
                   decoration: const InputDecoration(

@@ -1,7 +1,7 @@
 import 'package:exam_app_elevate/configure/di/di.dart';
 import 'package:exam_app_elevate/core/constants/app_strings.dart';
 import 'package:exam_app_elevate/core/router/app_routes.dart';
-import 'package:exam_app_elevate/core/utils/validators.dart';
+import 'package:exam_app_elevate/core/utils/app_validators.dart';
 import 'package:exam_app_elevate/features/auth/presentation/forget_password/cubit/forget_password_cubit.dart';
 import 'package:exam_app_elevate/features/auth/presentation/forget_password/cubit/forget_password_events.dart';
 import 'package:exam_app_elevate/features/auth/presentation/forget_password/cubit/forget_password_state.dart';
@@ -77,7 +77,7 @@ class _ForgetPasswordBody extends StatelessWidget {
                 TextFormField(
                   controller: cubit.emailController,
                   keyboardType: TextInputType.emailAddress,
-                  validator: Validators.email,
+                  validator: AppValidators.email,
                   decoration: const InputDecoration(
                     labelText: AppStrings.email,
                     hintText: AppStrings.enterEmail,
