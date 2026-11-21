@@ -7,7 +7,7 @@ import 'package:exam_app_elevate/features/auth/data/models/reset_password_reques
 import 'package:exam_app_elevate/features/auth/data/models/verify_reset_code_request_model.dart';
 import 'package:injectable/injectable.dart';
 
-import 'auth_remote_data_source.dart';
+import 'forget_password_remote_data_source.dart';
 
 @Injectable(as: ForgotPasswordRemoteDataSource, env: [AppEnvironment.prod])
 class AuthRemoteDataSourceImpl implements ForgotPasswordRemoteDataSource {

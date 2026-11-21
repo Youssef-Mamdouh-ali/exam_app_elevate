@@ -1,5 +1,5 @@
 import 'package:exam_app_elevate/configure/base_response/base_response.dart';
-import 'package:exam_app_elevate/features/auth/data/data_sources/remote/auth_remote_data_source.dart';
+import 'package:exam_app_elevate/features/auth/data/data_sources/remote/forget_password_remote_data_source.dart';
 import 'package:exam_app_elevate/features/auth/domain/repo/auth_repo.dart';
 import 'package:injectable/injectable.dart';
 
