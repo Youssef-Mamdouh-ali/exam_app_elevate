@@ -1,5 +1,6 @@
 import 'package:exam_app_elevate/core/router/app_routes.dart';
 import 'package:exam_app_elevate/features/auth/presentation/login/views/login_view.dart';
+import 'package:exam_app_elevate/features/auth/presentation/register/views/register_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,6 +17,11 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.login,
         builder: (context, state) => const LoginView(),
+      ),
+
+      GoRoute(
+        path: AppRoutes.register,
+        builder: (context, state) => const RegisterView(),
       ),
     ],
   );

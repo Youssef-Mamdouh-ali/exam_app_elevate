@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:exam_app_elevate/configure/di/di.dart';
 import 'package:exam_app_elevate/core/constants/app_colors.dart';
 import 'package:exam_app_elevate/core/constants/app_strings.dart';
@@ -9,6 +11,7 @@ import 'package:exam_app_elevate/features/auth/presentation/login/cubit/login_ev
 import 'package:exam_app_elevate/features/auth/presentation/login/cubit/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -21,7 +24,7 @@ class _LoginViewState extends State<LoginView> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool value = false;
+  bool rememberMe = false;
 
 
   @override
@@ -69,14 +72,10 @@ class _LoginViewState extends State<LoginView> {
                     const SizedBox(height: 16),
                     Row(
                       children: [
-                        Checkbox(
-                          value: value,
-                          onChanged: (value) {
-                            setState(() {
-                              this.value = value!;
-                            });
-                          },
-                        ),
+                      Checkbox(
+                      value: rememberMe,
+                      onChanged: (v) => setState(() => rememberMe = v ?? false),
+                    ),
                         const Text(AppStrings.rememberMe,
                             style: TextStyle(
 
@@ -91,7 +90,29 @@ class _LoginViewState extends State<LoginView> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    BlocBuilder<LoginCubit, LoginState>(
+
+                    BlocConsumer<LoginCubit, LoginState>(
+                      listenWhen: (prev, curr) =>
+                      prev.userLoginState != curr.userLoginState,
+                      listener: (context, state) {
+                        if (state.userLoginState?.errMsg != null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(state.userLoginState!.errMsg!),
+                              backgroundColor: AppColors.error,
+                            ),
+                          );
+                        }
+                        if (state.userLoginState?.data != null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(AppStrings.successLogin),
+                              backgroundColor: AppColors.blue90,
+                            ),
+                          );
+                          context.go('/register');
+                        }
+                      },
                       builder: (context, state) {
                         final isLoading = state.userLoginState?.isLoading ?? false;
                         return ElevatedButton(
@@ -100,19 +121,23 @@ class _LoginViewState extends State<LoginView> {
                           ),
                           onPressed: isLoading? null : () {
                             if (_formKey.currentState!.validate()) {
+
                               context.read<LoginCubit>().doEvent(
                                   UserLoginEvent(
                                       _emailController.text,
-                                      _passwordController.text
-                                  )
+                                      _passwordController.text,
+                                    rememberMe: rememberMe,
+                                  ),
+
                               );
+
                             }
                           },
                           child: isLoading ? const CircularProgressIndicator()
                               : const Text(AppStrings.login),
                         );
-                      }),
-
+                      },
+                    ),
                     const SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

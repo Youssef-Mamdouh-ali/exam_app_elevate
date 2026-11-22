@@ -1,20 +1,27 @@
 import 'package:exam_app_elevate/configure/base_state/base_state.dart';
-import 'package:exam_app_elevate/features/auth/domain/entities/user_entity.dart';
+import 'package:exam_app_elevate/features/auth/domain/entities/auth_entity.dart';
 
 class LoginState {
-  BaseState<List<UserEntity>>? userLoginState;
+  BaseState<AuthEntity>? userLoginState;
+  final bool rememberMe;
 
-  LoginState({this.userLoginState}){
-   userLoginState = userLoginState ?? BaseState<List<UserEntity>>(
+  LoginState({this.userLoginState,
+  this.rememberMe = false,}){
+
+   userLoginState = userLoginState ?? BaseState<AuthEntity>(
      isLoading: false,
      errMsg:null,
-     data: [],
+     data: null,
    );
   }
 
-  LoginState copyWith({BaseState<List<UserEntity>>? userLoginState}){
+  LoginState copyWith({
+    BaseState<AuthEntity>? userLoginState,
+    bool? rememberMe,
+  }){
     return LoginState(
       userLoginState: userLoginState ?? this.userLoginState,
+      rememberMe: rememberMe ?? this.rememberMe,
     );
   }
 
