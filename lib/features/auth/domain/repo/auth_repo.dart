@@ -3,6 +3,13 @@ import 'package:exam_app_elevate/features/auth/domain/entities/auth_entity.dart'
 
 abstract class AuthRepo {
 
+  Future<BaseResponse<void>> forgotPassword(String email);
+
+  Future<BaseResponse<void>> verifyResetCode(String code);
+
+  Future<BaseResponse<void>> resetPassword(String email, String newPassword);
+
+
   Future<BaseResponse<AuthEntity>> login(
       String email,
       String password,
@@ -11,5 +18,6 @@ abstract class AuthRepo {
 
   Future<BaseResponse<void>> removeToken();
   Future<BaseResponse<String>> getToken();
+
 
 }

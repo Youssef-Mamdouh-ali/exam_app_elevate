@@ -1,44 +1,51 @@
-import 'dart:developer';
-
 import 'package:exam_app_elevate/configure/base_response/base_response.dart';
-import 'package:exam_app_elevate/core/constants/app_strings.dart';
 import 'package:exam_app_elevate/features/auth/data/data_sources/local/auth_local_data_source.dart';
 import 'package:exam_app_elevate/features/auth/data/data_sources/remote/auth_remote_data_source.dart';
+import 'package:exam_app_elevate/features/auth/data/data_sources/remote/forget_password_remote_data_source.dart';
 import 'package:exam_app_elevate/features/auth/data/models/auth_response_model.dart';
 import 'package:exam_app_elevate/features/auth/domain/entities/auth_entity.dart';
 import 'package:exam_app_elevate/features/auth/domain/repo/auth_repo.dart';
 import 'package:injectable/injectable.dart';
 
-@LazySingleton(as: AuthRepo)
-class AuthRepoImpl implements AuthRepo{
-  AuthRemoteDataSource authRemoteDataSource ;
-  AuthLocalDataSource authLocalDataSource;
-  AuthRepoImpl(
-      this.authRemoteDataSource,
+@Injectable(as: AuthRepo)
+class AuthRepoImpl implements AuthRepo {
+  final AuthRemoteDataSource authRemoteDataSource;
+  final AuthLocalDataSource authLocalDataSource;
+  final ForgotPasswordRemoteDataSource _forgotPasswordRemoteDataSource;
+
+  AuthRepoImpl(this.authRemoteDataSource,
       this.authLocalDataSource,
-      );
+      this._forgotPasswordRemoteDataSource,);
+
   @override
-  Future<BaseResponse<AuthEntity>> login(String email, String password,bool rememberMe)async {
-    BaseResponse<AuthResponseModel> response= await authRemoteDataSource.login(email, password);
-    switch(response){
+  Future<BaseResponse<void>> forgotPassword(String email) {
+    return _forgotPasswordRemoteDataSource.forgotPassword(email);
+  }
+
+
+  @override
+  Future<BaseResponse<AuthEntity>> login(String email, String password,
+      bool rememberMe) async {
+    BaseResponse<AuthResponseModel> response = await authRemoteDataSource.login(
+        email, password);
+    switch (response) {
       case SuccessBaseResponse<AuthResponseModel>():
-       final AuthEntity user= response.data.toEntity();
-       if(rememberMe){
-         final saveTokenResponse= await authLocalDataSource.saveToken(user.token!);
+        final AuthEntity user = response.data.toEntity();
+        if (rememberMe) {
+          final saveTokenResponse = await authLocalDataSource.saveToken(
+              user.token!);
 
-         switch(saveTokenResponse){
+          switch (saveTokenResponse) {
+            case SuccessBaseResponse<void>():
+              return SuccessBaseResponse<AuthEntity>(user);
 
-           case SuccessBaseResponse<void>():
-             return SuccessBaseResponse<AuthEntity>(user);
-
-           case ErrorBaseResponse<void>():
-
-             return ErrorBaseResponse.fromError(saveTokenResponse.message);
-         }
-       }else{
-         await authLocalDataSource.removeToken();
-       }
-       return SuccessBaseResponse<AuthEntity>(user);
+            case ErrorBaseResponse<void>():
+              return ErrorBaseResponse.fromError(saveTokenResponse.message);
+          }
+        } else {
+          await authLocalDataSource.removeToken();
+        }
+        return SuccessBaseResponse<AuthEntity>(user);
       case ErrorBaseResponse<AuthResponseModel>():
         return ErrorBaseResponse.fromError(response.message);
     }
@@ -55,4 +62,13 @@ class AuthRepoImpl implements AuthRepo{
   }
 
 
+  @override
+  Future<BaseResponse<void>> verifyResetCode(String code) {
+    return _forgotPasswordRemoteDataSource.verifyResetCode(code);
+  }
+
+  @override
+  Future<BaseResponse<void>> resetPassword(String email, String newPassword) {
+    return _forgotPasswordRemoteDataSource.resetPassword(email, newPassword);
+  }
 }
