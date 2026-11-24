@@ -1,7 +1,7 @@
 import 'package:exam_app_elevate/configure/base_response/base_response.dart';
 import 'package:exam_app_elevate/features/auth/domain/entities/auth_entity.dart';
 
-abstract class AuthRepo {
+abstract interface class AuthRepo {
 
   Future<BaseResponse<void>> forgotPassword(String email);
 

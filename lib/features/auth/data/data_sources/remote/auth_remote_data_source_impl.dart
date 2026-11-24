@@ -1,4 +1,5 @@
 import 'package:exam_app_elevate/configure/base_response/base_response.dart';
+import 'package:exam_app_elevate/configure/base_response/safe_api_call.dart';
 import 'package:exam_app_elevate/features/auth/data/api/auth_api_client.dart';
 import 'package:exam_app_elevate/features/auth/data/data_sources/remote/auth_remote_data_source.dart';
 import 'package:exam_app_elevate/features/auth/data/models/auth_response_model.dart';
@@ -13,16 +14,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource{
   @override
   Future<BaseResponse<AuthResponseModel>> login(String email, String password)async {
 
-    try{
-      AuthResponseModel response=await _authApiClint.login(
-          LoginRequestModel(email:email, password: password)
-      );
-
-
-      return SuccessBaseResponse<AuthResponseModel>(response);
-    }catch(e){
-      return ErrorBaseResponse<AuthResponseModel>( e.toString());
-    }
+    return safeApiCall<AuthResponseModel>(
+          () => _authApiClint.login(
+        LoginRequestModel(email: email, password: password),
+      ),
+    );
   }
 
 

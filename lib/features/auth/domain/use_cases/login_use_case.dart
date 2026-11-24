@@ -3,7 +3,7 @@ import 'package:exam_app_elevate/features/auth/domain/entities/auth_entity.dart'
 import 'package:exam_app_elevate/features/auth/domain/repo/auth_repo.dart';
 import 'package:injectable/injectable.dart';
 
-@lazySingleton
+@injectable
 class LoginUseCase {
   AuthRepo authRepo;
 
@@ -15,4 +15,3 @@ class LoginUseCase {
     return await authRepo.login(email, password, rememberMe);
   }
 }
-

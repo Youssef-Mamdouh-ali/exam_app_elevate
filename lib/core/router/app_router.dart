@@ -4,6 +4,7 @@ import 'package:exam_app_elevate/features/auth/presentation/register/views/regis
 import 'package:exam_app_elevate/features/auth/presentation/forget_password/views/forget_password_view.dart';
 import 'package:exam_app_elevate/features/auth/presentation/forget_password/views/reset_password_view.dart';
 import 'package:exam_app_elevate/features/auth/presentation/forget_password/views/verify_code_view.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
@@ -16,6 +17,7 @@ class AppRouter {
         path: AppRoutes.forgetPassword,
         builder: (context, state) => const ForgetPasswordView(),
       ),
+
       GoRoute(
         path: AppRoutes.verifyCode,
         builder: (context, state) {
@@ -38,6 +40,10 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.register,
         builder: (context, state) => const RegisterView(),
+      ),
+      GoRoute(
+        path: AppRoutes.home,
+        builder: (context, state) => const Scaffold(),
       ),
     ],
   );

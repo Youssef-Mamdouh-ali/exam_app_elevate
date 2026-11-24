@@ -1,19 +1,15 @@
+import 'package:equatable/equatable.dart';
 import 'package:exam_app_elevate/configure/base_state/base_state.dart';
 import 'package:exam_app_elevate/features/auth/domain/entities/auth_entity.dart';
 
-class LoginState {
-  BaseState<AuthEntity>? userLoginState;
+class LoginState extends Equatable{
+  BaseState<AuthEntity>userLoginState;
   final bool rememberMe;
+   LoginState({
+    this.userLoginState = const BaseState<AuthEntity>(),
+    this.rememberMe = false,
+  });
 
-  LoginState({this.userLoginState,
-  this.rememberMe = false,}){
-
-   userLoginState = userLoginState ?? BaseState<AuthEntity>(
-     isLoading: false,
-     errMsg:null,
-     data: null,
-   );
-  }
 
   LoginState copyWith({
     BaseState<AuthEntity>? userLoginState,
@@ -24,6 +20,10 @@ class LoginState {
       rememberMe: rememberMe ?? this.rememberMe,
     );
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [userLoginState, rememberMe];
 
 
 }

@@ -14,19 +14,19 @@ class LoginCubit extends Cubit<LoginState>{
   void doEvent(LoginEvents event){
     switch(event){
       case UserLoginEvent():
-        login(event.email, event.password, event.rememberMe);
+        _login(event.email, event.password, event.rememberMe);
         break;
     }
   }
 
-  Future<void> login(String email, String password, bool rememberMe) async {
+  Future<void> _login(String email, String password, bool rememberMe) async {
     emit(state.copyWith(
         userLoginState: state.userLoginState?.copyWith(
             isLoading: true
         )
     )
     );
-    try{
+
       BaseResponse<AuthEntity> apiResult = await _loginUseCase(
           email,
           password,
@@ -54,16 +54,10 @@ class LoginCubit extends Cubit<LoginState>{
           )
           );
       }
-    }catch(e){
-      emit(state.copyWith(
-          userLoginState: state.userLoginState?.copyWith(
-              isLoading: false,
-              errMsg: e.toString()
-              )
-          )
-          );
+
+
 
     }
 
-  }
+
 }
