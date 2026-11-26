@@ -1,5 +1,5 @@
 import 'package:exam_app_elevate/core/constants/app_colors.dart';
-import 'package:exam_app_elevate/core/constants/app_strings.dart';
+import 'package:exam_app_elevate/core/constants/app_strings/app_fonts.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
@@ -61,7 +61,7 @@ class AppTheme {
         borderSide: const BorderSide(color: AppColors.error),
       ),
     ),
-    fontFamily: AppStrings.fontName,
+    fontFamily: AppFonts.fontName,
     textTheme: const TextTheme(
       titleLarge: TextStyle(
         fontSize: 20,

@@ -52,7 +52,7 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<BaseResponse<String>> getToken() {
+  Future<BaseResponse<String?>> getToken() {
     return authLocalDataSource.getToken();
   }
 

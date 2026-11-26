@@ -21,7 +21,7 @@ class LoginCubit extends Cubit<LoginState>{
 
   Future<void> _login(String email, String password, bool rememberMe) async {
     emit(state.copyWith(
-        userLoginState: state.userLoginState?.copyWith(
+        userLoginState: state.userLoginState.copyWith(
             isLoading: true
         )
     )
@@ -36,7 +36,7 @@ class LoginCubit extends Cubit<LoginState>{
 
         case SuccessBaseResponse<AuthEntity>():
           emit(state.copyWith(
-              userLoginState: state.userLoginState?.copyWith(
+              userLoginState: state.userLoginState.copyWith(
                   isLoading: false,
                   data: apiResult.data
 
@@ -45,7 +45,7 @@ class LoginCubit extends Cubit<LoginState>{
           );
         case ErrorBaseResponse<AuthEntity>():
           emit(state.copyWith(
-              userLoginState: state.userLoginState?.copyWith(
+              userLoginState: state.userLoginState.copyWith(
                   isLoading: false,
                   errMsg: apiResult.message
 

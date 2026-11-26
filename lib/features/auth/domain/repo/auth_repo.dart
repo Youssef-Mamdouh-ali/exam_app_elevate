@@ -17,7 +17,7 @@ abstract interface class AuthRepo {
       );
 
   Future<BaseResponse<void>> removeToken();
-  Future<BaseResponse<String>> getToken();
+  Future<BaseResponse<String?>> getToken();
 
 
 }

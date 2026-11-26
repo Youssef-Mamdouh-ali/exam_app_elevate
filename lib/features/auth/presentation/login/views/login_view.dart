@@ -3,6 +3,7 @@
 import 'package:exam_app_elevate/configure/di/di.dart';
 import 'package:exam_app_elevate/core/constants/app_colors.dart';
 import 'package:exam_app_elevate/core/constants/app_strings.dart';
+import 'package:exam_app_elevate/core/router/app_routes.dart';
 import 'package:exam_app_elevate/core/utils/app_validators.dart';
 
 import 'package:exam_app_elevate/features/auth/presentation/login/cubit/login_cubit.dart';
@@ -29,6 +30,7 @@ class _LoginViewState extends State<LoginView> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _rememberMe.dispose();
     super.dispose();
   }
 
@@ -96,7 +98,7 @@ class _LoginViewState extends State<LoginView> {
                           const Spacer(),
                           TextButton(
                             onPressed: () {
-                              context.go('/forget-password');
+                              context.push(AppRoutes.forgetPassword);
                             },
                             child: const Text(AppStrings.forgetPassword),
                           ),
@@ -108,26 +110,26 @@ class _LoginViewState extends State<LoginView> {
                         listenWhen: (prev, curr) =>
                         prev.userLoginState != curr.userLoginState,
                         listener: (context, state) {
-                          if (state.userLoginState?.errMsg != null) {
+                          if (state.userLoginState.errMsg != null) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text(state.userLoginState!.errMsg!),
+                                content: Text(state.userLoginState.errMsg!),
                                 backgroundColor: AppColors.error,
                               ),
                             );
                           }
-                          if (state.userLoginState?.data != null) {
+                          if (state.userLoginState.data != null) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text(AppStrings.successLogin),
                                 backgroundColor: AppColors.blue90,
                               ),
                             );
-                            context.go('/home');
+                            context.go(AppRoutes.home);
                           }
                         },
                         builder: (context, state) {
-                          final isLoading = state.userLoginState?.isLoading ?? false;
+                          final isLoading = state.userLoginState.isLoading ;
                           return ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size.fromHeight(50),
@@ -139,7 +141,7 @@ class _LoginViewState extends State<LoginView> {
                                   UserLoginEvent(
                                     _emailController.text,
                                     _passwordController.text,
-                                    rememberMe:context.read<LoginCubit>().state.rememberMe,
+                                    rememberMe: _rememberMe.value,
                                   ),
 
                                 );
@@ -163,7 +165,7 @@ class _LoginViewState extends State<LoginView> {
                           ),
                           TextButton(
                             onPressed: () {
-                              context.go('/register');
+                              context.push(AppRoutes.register);
                             },
                             child:  Text(AppStrings.signUp),
                           ),
