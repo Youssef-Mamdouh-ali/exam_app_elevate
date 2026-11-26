@@ -1,5 +1,5 @@
 import 'package:exam_app_elevate/core/constants/app_colors.dart';
-import 'package:exam_app_elevate/core/constants/app_strings.dart';
+import 'package:exam_app_elevate/core/constants/app_strings/app_fonts.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
@@ -41,27 +41,27 @@ class AppTheme {
       errorStyle: const TextStyle(color: AppColors.error),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(color: AppColors.black40),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(color: AppColors.black40),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(color: AppColors.blueBase),
       ),
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(color: AppColors.error),
       ),
       focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(color: AppColors.error),
       ),
     ),
-    fontFamily: AppStrings.fontName,
+    fontFamily: AppFonts.fontName,
     textTheme: const TextTheme(
       titleLarge: TextStyle(
         fontSize: 20,
