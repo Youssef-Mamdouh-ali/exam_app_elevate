@@ -8,9 +8,6 @@ class RegisterState{
    }){
 
     userRegisterState = userRegisterState ?? BaseState<AuthEntity>(
-      isLoading: false,
-      errMsg:null,
-      data: null,
     );
   }
 

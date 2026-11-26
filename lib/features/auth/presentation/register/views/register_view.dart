@@ -1,6 +1,6 @@
 import 'package:exam_app_elevate/configure/di/di.dart';
 import 'package:exam_app_elevate/core/constants/app_strings.dart';
-import 'package:exam_app_elevate/core/utils/validators.dart';
+import 'package:exam_app_elevate/core/utils/app_validators.dart';
 import 'package:exam_app_elevate/features/auth/data/models/register_request_model.dart';
 import 'package:exam_app_elevate/features/auth/presentation/register/cubit/register_cubit.dart';
 import 'package:exam_app_elevate/features/auth/presentation/register/cubit/register_events.dart';
@@ -60,7 +60,7 @@ class _RegisterViewState extends State<RegisterView> {
                     children: [
                       TextFormField(
                         controller: _userNameController,
-                        validator: Validators.validateName,
+                        validator: AppValidators.validateUsername,
                         decoration: const InputDecoration(
                           labelText: AppStrings.userName,
                           hintText: AppStrings.enterUserName,
@@ -71,7 +71,7 @@ class _RegisterViewState extends State<RegisterView> {
                           children: [
                             Expanded(
                               child: TextFormField(
-                                validator: Validators.validateName,
+                                validator: AppValidators.validateName,
                                 controller: _firstNameController,
                                 decoration: const InputDecoration(
                                   labelText: AppStrings.firstName,
@@ -82,7 +82,7 @@ class _RegisterViewState extends State<RegisterView> {
                             const SizedBox(width: 16.0),
                             Expanded(
                               child: TextFormField(
-                                validator: Validators.validateName,
+                                validator: AppValidators.validateName,
                                 controller: _lastNameController,
                                 decoration: const InputDecoration(
                                   labelText: AppStrings.lastName,
@@ -94,7 +94,7 @@ class _RegisterViewState extends State<RegisterView> {
                       ),
                       const SizedBox(height: 16.0),
                       TextFormField(
-                        validator: Validators.validateEmail,
+                        validator: AppValidators.email,
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
@@ -107,7 +107,7 @@ class _RegisterViewState extends State<RegisterView> {
                           children: [
                             Expanded(
                               child: TextFormField(
-                                validator: Validators.validatePassword,
+                                validator:AppValidators.password,
                                 controller: _passwordController,
                                 obscureText: true,
                                 decoration: const InputDecoration(
@@ -119,7 +119,9 @@ class _RegisterViewState extends State<RegisterView> {
                             const SizedBox(width: 16.0),
                             Expanded(
                               child: TextFormField(
-                                validator: Validators.validatePassword,
+                                validator: (value) => AppValidators.confirmPassword(
+                                  _passwordController.text,
+                                )(value),
                                 controller: _confirmPasswordController,
                                 obscureText: true,
                                 decoration: const InputDecoration(
@@ -132,7 +134,7 @@ class _RegisterViewState extends State<RegisterView> {
                       ),
                       const SizedBox(height: 16.0),
                       TextFormField(
-                        validator: Validators.validatePhoneNumber,
+                        validator: AppValidators.validatePhoneNumber,
                         controller: _phoneNumberController,
                         keyboardType: TextInputType.phone,
                         decoration: const InputDecoration(
@@ -151,7 +153,7 @@ class _RegisterViewState extends State<RegisterView> {
                               onPressed:isLoading ? null : () {
 
                                 if (_formKey.currentState!.validate()) {
-                                  print('Form is valid');
+
                                   context.read<RegisterCubit>().doEvent(
                                     UserRegisterEvent(
                                       RegisterRequestModel(
@@ -198,6 +200,7 @@ class _RegisterViewState extends State<RegisterView> {
                                 ),
 
                               );
+                              //TODO navigate to home screen
                             }
                           }
                       ),
@@ -207,7 +210,9 @@ class _RegisterViewState extends State<RegisterView> {
                         children: [
                           const Text(AppStrings.alreadyHaveAccount),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              //TODO navigate to login screen
+                            },
                             child: const Text(AppStrings.login,
                             ),
                           ),

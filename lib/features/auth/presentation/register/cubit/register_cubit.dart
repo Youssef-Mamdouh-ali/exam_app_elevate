@@ -14,11 +14,11 @@ class RegisterCubit extends Cubit<RegisterState>{
   RegisterCubit(this._registerUseCase) : super(RegisterState());
 
   void doEvent(RegisterEvents event){
-    print('doEvent called: $event');
+
     switch(event){
 
       case UserRegisterEvent():
-        print('UserRegisterEvent matched');
+
         _register(event.model);
         break;
     }
@@ -26,10 +26,9 @@ class RegisterCubit extends Cubit<RegisterState>{
 
   Future<void> _register(RegisterRequestModel model) async{
     emit(state.copyWith(userRegisterState: state.userRegisterState?.copyWith(isLoading: true)));
-    try{
-      print('calling use case');
+
       final response = await _registerUseCase(model);
-      print('use case result: $response');
+
       switch(response){
         case SuccessBaseResponse<AuthEntity>():
           emit(state.copyWith(
@@ -43,13 +42,8 @@ class RegisterCubit extends Cubit<RegisterState>{
                   isLoading: false,
                   errMsg: response.message)));
       }
-    }catch(e){
-      emit(state.copyWith(
-          userRegisterState: state.userRegisterState?.copyWith(
-              isLoading: false,
-              errMsg: e.toString())));
 
-    }
+
   }
 
 }

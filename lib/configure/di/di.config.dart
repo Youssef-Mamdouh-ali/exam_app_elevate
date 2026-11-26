@@ -25,7 +25,6 @@ import '../../features/auth/domain/use_cases/register_use_case.dart' as _i1010;
 import '../../features/auth/presentation/register/cubit/register_cubit.dart'
     as _i404;
 import '../dio/api_module.dart' as _i162;
-import '../dio/dio_module.dart' as _i977;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -34,9 +33,7 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
-    final dioModule = _$DioModule();
     final apiModule = _$ApiModule();
-    gh.singleton<_i361.Dio>(() => dioModule.dio);
     gh.singleton<_i541.AuthApiClient>(
       () => apiModule.authApiClient(gh<_i361.Dio>()),
     );
@@ -55,7 +52,5 @@ extension GetItInjectableX on _i174.GetIt {
     return this;
   }
 }
-
-class _$DioModule extends _i977.DioModule {}
 
 class _$ApiModule extends _i162.ApiModule {}

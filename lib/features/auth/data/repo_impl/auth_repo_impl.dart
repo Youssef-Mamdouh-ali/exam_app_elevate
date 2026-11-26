@@ -20,7 +20,7 @@ class AuthRepoImpl implements AuthRepo {
     switch(response){
       case SuccessBaseResponse<AuthResponseModel>():
         final AuthEntity auth = response.data.toEntity();
-        log('Success$response');
+
         return SuccessBaseResponse<AuthEntity>(auth);
       case ErrorBaseResponse<AuthResponseModel>():
         return ErrorBaseResponse<AuthEntity>(response.message);
