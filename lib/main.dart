@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 
+import 'configure/di/app_environment.dart';
+import 'configure/di/di.dart';
+import 'core/router/app_router.dart';
+import 'core/theme/app_theme.dart';
+
 void main() {
-  runApp(ExamApp());
+  configureDependencies(env: AppEnvironment.dev);
+  runApp(const ExamApp());
 }
 
 class ExamApp extends StatelessWidget {
@@ -9,6 +15,11 @@ class ExamApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false);
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
+      themeMode: ThemeMode.light,
+      routerConfig: AppRouter.router,
+    );
   }
 }
