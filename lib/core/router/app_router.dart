@@ -29,8 +29,11 @@ class AppRouter {
           final email = state.extra as String;
           return ResetPasswordView(email: email);
         },
-        path: AppRoutes.splash,
-        builder: (context, state) => RegisterView(),
+
+      ),
+      GoRoute(
+        path: AppRoutes.register,
+        builder: (context, state) => const RegisterView(),
       ),
     ],
   );
