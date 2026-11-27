@@ -14,17 +14,7 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
-import '../../features/auth/data/api/auth_api_client.dart' as _i541;
-import '../../features/auth/data/data_sources/remote/auth_remote_data_source.dart'
-    as _i432;
-import '../../features/auth/data/data_sources/remote/auth_remote_data_source_impl.dart'
-    as _i299;
-import '../../features/auth/data/repo_impl/auth_repo_impl.dart' as _i279;
-import '../../features/auth/domain/repo/auth_repo.dart' as _i170;
-import '../../features/auth/domain/use_cases/register_use_case.dart' as _i1010;
-import '../../features/auth/presentation/register/cubit/register_cubit.dart'
-    as _i404;
-import '../dio/api_module.dart' as _i162;
+import '../dio/dio_module.dart' as _i977;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -33,24 +23,10 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
-    final apiModule = _$ApiModule();
-    gh.singleton<_i541.AuthApiClient>(
-      () => apiModule.authApiClient(gh<_i361.Dio>()),
-    );
-    gh.factory<_i432.AuthRemoteDataSource>(
-      () => _i299.AuthRemoteDataSourceImpl(gh<_i541.AuthApiClient>()),
-    );
-    gh.factory<_i170.AuthRepo>(
-      () => _i279.AuthRepoImpl(gh<_i432.AuthRemoteDataSource>()),
-    );
-    gh.lazySingleton<_i1010.RegisterUseCase>(
-      () => _i1010.RegisterUseCase(gh<_i170.AuthRepo>()),
-    );
-    gh.factory<_i404.RegisterCubit>(
-      () => _i404.RegisterCubit(gh<_i1010.RegisterUseCase>()),
-    );
+    final dioModule = _$DioModule();
+    gh.singleton<_i361.Dio>(() => dioModule.dio);
     return this;
   }
 }
 
-class _$ApiModule extends _i162.ApiModule {}
+class _$DioModule extends _i977.DioModule {}

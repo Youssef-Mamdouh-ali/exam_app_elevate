@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:exam_app_elevate/core/constants/api_endpoints.dart';
+import 'package:exam_app_elevate/features/auth/data/models/forgot_password_request_model.dart';
+import 'package:exam_app_elevate/features/auth/data/models/reset_password_request_model.dart';
+import 'package:exam_app_elevate/features/auth/data/models/verify_reset_code_request_model.dart';
 import 'package:exam_app_elevate/features/auth/data/models/auth_response_model.dart';
 import 'package:exam_app_elevate/features/auth/data/models/register_request_model.dart';
 
@@ -15,6 +18,12 @@ abstract class AuthApiClient {
 
   @POST(ApiEndpoints.signup)
   Future<AuthResponseModel> signUp(@Body() RegisterRequestModel model);
+  @POST(ApiEndpoints.forgotPassword)
+  Future<void> forgotPassword(@Body() ForgotPasswordRequestModel request);
 
+  @POST(ApiEndpoints.verifyResetCode)
+  Future<void> verifyResetCode(@Body() VerifyResetCodeRequestModel request);
 
+  @PUT(ApiEndpoints.resetPassword)
+  Future<void> resetPassword(@Body() ResetPasswordRequestModel request);
 }
